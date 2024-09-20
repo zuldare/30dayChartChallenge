@@ -1,0 +1,110 @@
+---
+title: "VisualizacionDatos_30daychartschallenge"
+author: "José Jaime Hernández Ortiz"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{python}
+print("hola")
+```
+
+## Introducción
+
+enlace CrossfitGames https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv
+
+
+```{r}
+library(ggplot2)
+
+# Datos: puedes importar el dataset aquí en R si fuese necesario
+datos <- data.frame(
+  Athlete = c("Halil Mutlu", "Wu Wenxiong", "Zhang Xiangxiang", "Wang Shin-yuan", "Sergio Álvarez"),
+  Snatch = c(137.5, 125.0, 125.0, 125.0, 120.0),
+  Clean_Jerk = c(167.5, 162.5, 162.5, 160.0, 155.0)
+)
+
+# Convertir los datos a formato largo (long format)
+datos_largo <- tidyr::gather(datos, key = "Lift_Type", value = "Weight", Snatch, Clean_Jerk)
+
+# Crear gráfico de barras apiladas
+ggplot(datos_largo, aes(fill = Lift_Type, y = Weight, x = Athlete)) +
+  geom_bar(position = "fill", stat = "identity") +
+  labs(
+    title = "Proporción de Snatch y Clean & Jerk por Atleta",
+    x = "Atleta",
+    y = "Proporción de Peso Levantado"
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal()
+```
+
+
+
+![](images/prompts.png)
+
+### Comparaciones
+
+1.  part-to-whole
+2.  neo
+3.  makeover
+4.  waffle
+5.  diverging
+6.  data day: [OECD](https://github.com/30DayChartChallenge/Edition2024/blob/main/data.oecd.org)
+
+### Distribuciones
+
+7.  hazards
+8.  circular
+9.  major/minor
+10. physical
+11. mobile-friendly
+12. theme day: Reuters Graphics
+
+### Relaciones
+
+13. family
+14. heatmap
+15. historical
+16. weather
+17. networks
+18. data day: [Asian Development Bank](https://github.com/30DayChartChallenge/Edition2024/blob/main/data.adb.org)
+
+### Series Temporales
+
+19. dinosaurs
+20. correlation
+21. green energy
+22. mobility
+23. tiles
+24. theme day: [ILO Africa](https://github.com/30DayChartChallenge/Edition2024/blob/main/ilostat.ilo.org/data/africa)
+
+### Incertidumbres
+
+25. global change
+26. AI
+27. good/bad
+28. trend
+29. black & white
+30. theme day:
