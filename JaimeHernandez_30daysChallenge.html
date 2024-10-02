@@ -103,72 +103,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="quarto" class="level2">
-<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
-</section>
-<section id="running-code" class="level2">
-<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
-<p>You can add options to executable code like this</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-</div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"hola"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>hola</code></pre>
-</div>
-</div>
-</section>
 <section id="introducción" class="level2">
 <h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
-<p>enlace CrossfitGames https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos: puedes importar el dataset aquí en R si fuese necesario</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Athlete =</span> <span class="fu">c</span>(<span class="st">"Halil Mutlu"</span>, <span class="st">"Wu Wenxiong"</span>, <span class="st">"Zhang Xiangxiang"</span>, <span class="st">"Wang Shin-yuan"</span>, <span class="st">"Sergio Álvarez"</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Snatch =</span> <span class="fu">c</span>(<span class="fl">137.5</span>, <span class="fl">125.0</span>, <span class="fl">125.0</span>, <span class="fl">125.0</span>, <span class="fl">120.0</span>),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Clean_Jerk =</span> <span class="fu">c</span>(<span class="fl">167.5</span>, <span class="fl">162.5</span>, <span class="fl">162.5</span>, <span class="fl">160.0</span>, <span class="fl">155.0</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir los datos a formato largo (long format)</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>datos_largo <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(datos, <span class="at">key =</span> <span class="st">"Lift_Type"</span>, <span class="at">value =</span> <span class="st">"Weight"</span>, Snatch, Clean_Jerk)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear gráfico de barras apiladas</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_largo, <span class="fu">aes</span>(<span class="at">fill =</span> Lift_Type, <span class="at">y =</span> Weight, <span class="at">x =</span> Athlete)) <span class="sc">+</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Proporción de Snatch y Clean &amp; Jerk por Atleta"</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Atleta"</span>,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proporción de Peso Levantado"</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="JaimeHernandez_30daysChallenge_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>enlace CrossfitGames https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv Este proyecto recoge la actividad de la asignatura de <strong>Visualización de Datos</strong> del Máster en BigData</p>
 <p><img src="images/prompts.png" class="img-fluid"></p>
 <section id="comparaciones" class="level3">
 <h3 class="anchored" data-anchor-id="comparaciones">Comparaciones</h3>
 <ol type="1">
-<li>part-to-whole</li>
+<li>part-to-whole <a href="#fig-gender-originzone" class="quarto-xref">Figure&nbsp;1</a></li>
 <li>neo</li>
 <li>makeover</li>
 <li>waffle</li>
@@ -219,6 +161,258 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>black &amp; white</li>
 <li>theme day:</li>
 </ol>
+</section>
+</section>
+<section id="gráficos-diarios" class="level1">
+<h1>Gráficos diarios</h1>
+<section id="día-1-part-to-whole" class="level2">
+<h2 class="anchored" data-anchor-id="día-1-part-to-whole">Día 1: part-to-whole</h2>
+<p><strong>Audiencia:</strong> Directivos de un canal de televisión especializado en eventos de nicho. En este caso los Crossfit Games.</p>
+<p><strong>Objetivo:</strong> Mostrar un gráfico donde se pueda ver desglosado fácilmente las distintas zonas de representación de competidores y su sexo. Uno de los objetivos al preparar esta visualización es con la finalidad de obtener un mejor conocimiento de los partícipes en la competición, sus orígenes y donde puede ser mejor enfocar la venta de derechos de retrasmisión.</p>
+<p><strong>Visualización:</strong> Herramienta R para generar un treemap con diferentes subconjuntos. En este caso</p>
+<p><strong>Dataset:</strong> https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar las librerías necesarias si no están instaladas</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(treemap)) <span class="fu">install.packages</span>(<span class="st">"treemap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: treemap</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(readr)) <span class="fu">install.packages</span>(<span class="st">"readr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: readr</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(dplyr)) <span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: dplyr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(treemap)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar el dataset</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"crosfit2023_no_duplicates.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 952 Columns: 30</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (8): competitorName, firstName, lastName, gender, affiliateName, countr...
+dbl (22): competitorId, genderId, age, ageNull, height, heightNull, weight, ...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dataClean <span class="ot">&lt;-</span> data</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiar los valores de la columna 'gender' a "Male" y "Female"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>dataClean <span class="ot">&lt;-</span> dataClean <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">ifelse</span>(gender <span class="sc">==</span> <span class="st">"M"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reemplazar los valores "N/A" de la columna 'regionName' por "To be selected"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>dataClean <span class="ot">&lt;-</span> dataClean <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">regionName =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(regionName) <span class="sc">|</span> regionName <span class="sc">==</span> <span class="st">""</span> <span class="sc">|</span> regionName <span class="sc">==</span> <span class="st">"N/A"</span>, </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"To be selected"</span>, </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                             regionName))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una nueva tabla que cuente el número de competidores por género y región</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> dataClean <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, regionName) <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())  <span class="co"># Contar competidores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'gender'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una columna de etiquetas que incluya la región, género y el número de competidores</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> data_summary <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="fu">paste</span>(regionName, count))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el treemap multinivel</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">treemap</span>(data_summary,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"label"</span>), </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">vSize =</span> <span class="st">"count"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Crossfit competitors gender-region multilevel treemap"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">vColor =</span> <span class="st">"gender"</span>, </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"categorical"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#9ac64a"</span>, <span class="st">"#764ac6"</span>), </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">fontsize.labels =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">12</span>), </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#align.labels = list(c("center", "center"))</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">align.labels =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"center"</span>), <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-gender-originzone" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gender-originzone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="JaimeHernandez_30daysChallenge_files/figure-html/fig-gender-originzone-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gender-originzone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Distribución de competidores por género y zonas geográficas
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="día-02-neo" class="level2">
+<h2 class="anchored" data-anchor-id="día-02-neo">Día 02: neo</h2>
+<p><strong>Audiencia:</strong> Directivos de un canal de televisión especializado en eventos de nicho. En este caso los Crossfit Games.</p>
+<p><strong>Objetivo:</strong> Mostrar la información del gráfico anterior, pero de una manera más moderna. Este gráfico nos permitirá ver de una forma más sencilla que regiones tienen más volumen de competidores en conjunto (tanto categoría masculina como femenina) y poder compararla con el resto de regiones</p>
+<p><strong>Visualización:</strong> mediante el uso de gráficas apiladas usando ggplot2</p>
+<p><strong>Dataset:</strong> https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_summary, <span class="fu">aes</span>(<span class="at">x =</span> regionName, <span class="at">y =</span> count, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span>  <span class="co"># Barras apiladas</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"#764ac6"</span>, <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"#9ac64a"</span>)) <span class="sc">+</span>  </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of competitors by gender and region"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Region"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of competitors"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Gender"</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>) <span class="sc">+</span>  </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),   </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),   </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),  </span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">12</span>),  <span class="co"># Rotar las etiquetas del eje X</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),   </span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),  <span class="co"># Eliminamos líneas de cuadrícula para un estilo más moderno</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">max</span>(data_summary<span class="sc">$</span>count) <span class="sc">*</span> <span class="fl">1.2</span>)  <span class="co"># Ajustar la escala Y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="JaimeHernandez_30daysChallenge_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="día-xx-xxxxx" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-1" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-1">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-2" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-2">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-3" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-3">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-4" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-4">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-5" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-5">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-6" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-6">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-7" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-7">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-8" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-8">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-9" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-9">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-10" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-10">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-11" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-11">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-12" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-12">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-13" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-13">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-14" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-14">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-15" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-15">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-16" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-16">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-17" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-17">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-18" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-18">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-19" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-19">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-20" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-20">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-21" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-21">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-22" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-22">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-23" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-23">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-24" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-24">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-25" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-25">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
+</section>
+<section id="día-xx-xxxxx-26" class="level2">
+<h2 class="anchored" data-anchor-id="día-xx-xxxxx-26">Día XX: XXXXX</h2>
+<p><strong>Audiencia:</strong>: <strong>Objetivo:</strong> <strong>Visualización:</strong> <strong>Dataset:</strong></p>
 </section>
 </section>
 

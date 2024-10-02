@@ -5,68 +5,16 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
-
-```{python}
-print("hola")
-```
-
 ## Introducción
 
 enlace CrossfitGames https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv
-
-
-```{r}
-library(ggplot2)
-
-# Datos: puedes importar el dataset aquí en R si fuese necesario
-datos <- data.frame(
-  Athlete = c("Halil Mutlu", "Wu Wenxiong", "Zhang Xiangxiang", "Wang Shin-yuan", "Sergio Álvarez"),
-  Snatch = c(137.5, 125.0, 125.0, 125.0, 120.0),
-  Clean_Jerk = c(167.5, 162.5, 162.5, 160.0, 155.0)
-)
-
-# Convertir los datos a formato largo (long format)
-datos_largo <- tidyr::gather(datos, key = "Lift_Type", value = "Weight", Snatch, Clean_Jerk)
-
-# Crear gráfico de barras apiladas
-ggplot(datos_largo, aes(fill = Lift_Type, y = Weight, x = Athlete)) +
-  geom_bar(position = "fill", stat = "identity") +
-  labs(
-    title = "Proporción de Snatch y Clean & Jerk por Atleta",
-    x = "Atleta",
-    y = "Proporción de Peso Levantado"
-  ) +
-  scale_y_continuous(labels = scales::percent) +
-  theme_minimal()
-```
-
-
+Este proyecto recoge la actividad de la asignatura de **Visualización de Datos** del Máster en BigData 
 
 ![](images/prompts.png)
 
 ### Comparaciones
 
-1.  part-to-whole
+1.  part-to-whole @fig-gender-originzone 
 2.  neo
 3.  makeover
 4.  waffle
@@ -108,3 +56,271 @@ ggplot(datos_largo, aes(fill = Lift_Type, y = Weight, x = Athlete)) +
 28. trend
 29. black & white
 30. theme day:
+
+
+# Gráficos diarios
+
+## Día 1: part-to-whole
+**Audiencia:** Directivos de un canal de televisión especializado en eventos de nicho. En este caso los Crossfit Games.
+
+**Objetivo:** Mostrar un gráfico donde se pueda ver desglosado fácilmente las distintas zonas de representación de competidores y su sexo. Uno de los objetivos al preparar esta visualización es con la finalidad de obtener un mejor conocimiento de los partícipes en la competición, sus orígenes y donde puede ser mejor enfocar la venta de derechos de retrasmisión.
+
+**Visualización:** Herramienta R para generar un treemap con diferentes subconjuntos. En este caso 
+
+**Dataset:** https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv
+
+```{r}
+#| echo: true
+#| results: hide
+
+# Instalar las librerías necesarias si no están instaladas
+if (!require(treemap)) install.packages("treemap")
+if (!require(readr)) install.packages("readr")
+if (!require(dplyr)) install.packages("dplyr")
+
+library(treemap)
+library(readr)
+library(dplyr)
+
+# Cargar el dataset
+data <- read_csv("crosfit2023_no_duplicates.csv")
+dataClean <- data
+
+# Cambiar los valores de la columna 'gender' a "Male" y "Female"
+dataClean <- dataClean %>%
+  mutate(gender = ifelse(gender == "M", "Male", "Female"))
+
+# Reemplazar los valores "N/A" de la columna 'regionName' por "To be selected"
+dataClean <- dataClean %>%
+  mutate(regionName = ifelse(is.na(regionName) | regionName == "" | regionName == "N/A", 
+                             "To be selected", 
+                             regionName))
+
+# Crear una nueva tabla que cuente el número de competidores por género y región
+data_summary <- dataClean %>%
+  group_by(gender, regionName) %>%
+  summarise(count = n())  # Contar competidores
+
+# Crear una columna de etiquetas que incluya la región, género y el número de competidores
+data_summary <- data_summary %>%
+  mutate(label = paste(regionName, count))
+```
+
+
+```{r}
+#| label: fig-gender-originzone
+#| fig-cap: "Distribución de competidores por género y zonas geográficas"
+#| warning: false
+
+# Crear el treemap multinivel
+treemap(data_summary,
+        index = c("gender", "label"), 
+        vSize = "count",
+        title = "Crossfit competitors gender-region multilevel treemap",
+        vColor = "gender", 
+        type = "categorical",
+        palette = c("#9ac64a", "#764ac6"), 
+        fontsize.labels = c(15, 12), 
+        #align.labels = list(c("center", "center"))
+        align.labels = list(c("left", "center"), c("left", "top"))
+        ) 
+```
+
+
+## Día 02: neo
+**Audiencia:** Directivos de un canal de televisión especializado en eventos de nicho. En este caso los Crossfit Games.
+
+**Objetivo:** Mostrar la información del gráfico anterior, pero de una manera más moderna. Este gráfico nos permitirá ver de una forma más sencilla que regiones tienen más volumen de competidores en conjunto (tanto categoría masculina como femenina) y poder compararla con el resto de regiones
+
+**Visualización:** mediante el uso de gráficas apiladas usando ggplot2
+
+**Dataset:** https://www.kaggle.com/datasets/tgomesjuliana/crossfit-games/data?select=df_open_2023.csv
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+
+ggplot(data_summary, aes(x = regionName, y = count, fill = gender)) +
+  geom_bar(stat = "identity", position = "stack") +  # Barras apiladas
+  scale_fill_manual(values = c("Male" = "#764ac6", "Female" = "#9ac64a")) +  
+  labs(title = "Number of competitors by gender and region",
+       x = "Region",
+       y = "Number of competitors",
+       fill = "Gender") +
+  theme_minimal(base_size = 15) +  
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),   
+    axis.title.x = element_text(size = 14, face = "bold"),   
+    axis.title.y = element_text(size = 14, face = "bold"),  
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Rotar las etiquetas del eje X
+    axis.text.y = element_text(size = 12),   
+    panel.grid.major = element_blank(),  # Eliminamos líneas de cuadrícula para un estilo más moderno
+    panel.grid.minor = element_blank()
+  ) +
+  expand_limits(y = max(data_summary$count) * 1.2)  # Ajustar la escala Y
+```
+
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
+## Día XX: XXXXX
+**Audiencia:**:
+**Objetivo:**
+**Visualización:**
+**Dataset:**
+
